@@ -1,0 +1,24 @@
+spring:
+    application:
+        name: dsp-api-gateway
+
+spring:
+  cloud:
+    gateway:
+      routes:
+
+      - id: reporting-service
+        uri: http://localhost:9092
+        predicates:
+          - Path=/api/reporting/**
+
+      - id: platform-service
+        uri: http://localhost:9091
+        predicates:
+          - Path=/api/**
+        filters:
+          - JWTFilter=RSA256,HS256
+          - RemoveResponseHeader=X-Powered-By
+
+server:
+    port: 5000
