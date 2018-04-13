@@ -5,7 +5,7 @@ import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractNameValueGatewayFilterFactory;
 import org.springframework.http.HttpStatus;
@@ -25,10 +25,9 @@ public class JWTFilter extends AbstractNameValueGatewayFilterFactory {
 
     private static final Logger logger = LoggerFactory.getLogger(JWTFilter.class);
 
-    @Autowired
     private final JWTVerifier jwtVerifier;
 
-    public JWTFilter(JWTVerifier jwtVerifier) {
+    public JWTFilter(@Qualifier("jwk") JWTVerifier jwtVerifier) {
         this.jwtVerifier = jwtVerifier;
     }
 
